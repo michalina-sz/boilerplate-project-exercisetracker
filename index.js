@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema({
 		trim: true,
 	},
 });
-userSchema.index({ username: 1 }, { unique: true });
 
 const User = mongoose.model('User', userSchema);
 
