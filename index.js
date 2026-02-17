@@ -112,7 +112,7 @@ app.get('/api/users/:_id/logs', async (req, res) => {
 	if (to) dateFilter.$lte = new Date(to);
 	if (Object.keys(dateFilter).length > 0) filter.date = dateFilter;
 
-	let query = Exercise.find(filter);
+	let query = Exercise.find(filter).sort({ date: 1 });
 
 	if (limit !== undefined) {
 		const lim = Number(limit);
@@ -123,6 +123,8 @@ app.get('/api/users/:_id/logs', async (req, res) => {
 		}
 		query = query.limit(lim);
 	}
+
+	const totalCount = await Exercise.countDocuments(filter);
 
 	const exercises = await query;
 
