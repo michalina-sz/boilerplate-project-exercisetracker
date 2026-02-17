@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
 		trim: true,
 	},
 });
+userSchema.index({ username: 1 }, { unique: true });
 
 const User = mongoose.model('User', userSchema);
 
@@ -45,7 +46,7 @@ const exerciseSchema = new mongoose.Schema({
 const Exercise = mongoose.model('Exercise', exerciseSchema);
 
 app.post('/api/users', async (req, res) => {
-	const username = req.body.username;
+	const username = (req.body.username || '').trim();
 	if (!username) return res.status(400).json({ error: 'username is required' });
 
 	const user = new User({ username: username });
